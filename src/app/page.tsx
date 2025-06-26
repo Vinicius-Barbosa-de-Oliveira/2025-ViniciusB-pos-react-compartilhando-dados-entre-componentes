@@ -1,5 +1,5 @@
 "use client";
-
+import { carregar } from "@/data";
 import type React from "react";
 
 import { useEffect, useState } from "react";
@@ -58,7 +58,12 @@ const Tarefas: React.FC<TareafasProps> = ({ dados }) => {
 
 const Home = () => {
 	const [mostrarModal, setMostrarModal] = useState(false);
-    const tarefas: TarefaInterface[] = dados;
+    const [tarefas, setTarefas] = useState<TarefaInterface[]>([]);
+	useEffect(() => {
+		carregar()
+		.then((res) => setTarefas(res))
+		.catch((err) => console.error("Erro ao carregar tarefas:", err));
+	}, []);
 
 	return (
 		<div className="container mx-auto p-4">
