@@ -4,7 +4,8 @@ import type React from "react";
 
 import { useEffect, useState } from "react";
 import dados, { TarefaInterface } from "@/data";
-import Cabecalho from "@/componentes/Cabecalhot";
+import Cabecalho from "@/componentes/Cabecalho";
+import ModalTarefa from "@/componentes/ModalTarefa";
 
 interface TarefaProps {
 	titulo: string;
@@ -56,11 +57,23 @@ const Tarefas: React.FC<TareafasProps> = ({ dados }) => {
 };
 
 const Home = () => {
-	const tarefas: TarefaInterface[] = dados;
+	const [mostrarModal, setMostrarModal] = useState(false);
+    const tarefas: TarefaInterface[] = dados;
 
 	return (
 		<div className="container mx-auto p-4">
 			<Cabecalho />
+			<button
+			onClick={() => setMostrarModal(true)}
+			className="bg-blue-600 text-white px-4 py-2 rounded"
+			>
+				Adicionar Tarefa
+			</button>
+
+			{mostrarModal && (
+				<ModalTarefa onFechar={() => setMostrarModal(false)} />
+			)}
+
 			<Tarefas dados={tarefas} />
 		</div>
 	);
